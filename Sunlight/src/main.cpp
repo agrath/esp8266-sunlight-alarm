@@ -1,10 +1,16 @@
 #include <Arduino.h>
+#define GLOBALS 1 //only do this in a single file
+#include <Globals.h>
 #include <Wire.h>
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
 #include <FastLED.h>
 #include <Config.h>
 #include <Debug.h>
+#include <i2c.h>
+#include <Serial.h>
+#include <Screen.h>
+#include <MacAddress.h>
+#include <ESP8266WiFi.h>
+#include <WiFiClient.h>
 
 CRGB leds[NUM_LEDS];
 char gammaCorrection[] =
@@ -26,8 +32,31 @@ char gammaCorrection[] =
         177, 180, 182, 184, 186, 189, 191, 193, 196, 198, 200, 203, 205, 208, 210, 213,
         215, 218, 220, 223, 225, 228, 231, 233, 236, 239, 241, 244, 247, 249, 252, 255};
 
+
+
 void setup() {
+  if (debugEnabled)
+  {
+    initializeSerial();
+  }
+
+  initializeI2C();
+  
   Debug("Hello world!");
+
+  int deviceCount = debugScanForI2CDevices();
+  if (deviceCount == 0)
+  {
+    while (true)
+    {
+      Debug(F("Startup halted after I2C bus initialization for debugging..."));
+      delay(1000);
+    }
+  }
+  if (HAS_SCREEN)
+  {
+    initializeOLEDDisplay();
+  }
 }
 
 void loop() {
