@@ -4,6 +4,7 @@
 #include <Adafruit_SSD1306.h>
 #include <FastLED.h>
 #include <Config.h>
+#include <Debug.h>
 
 CRGB leds[NUM_LEDS];
 char gammaCorrection[] =
@@ -26,7 +27,7 @@ char gammaCorrection[] =
         215, 218, 220, 223, 225, 228, 231, 233, 236, 239, 241, 244, 247, 249, 252, 255};
 
 void setup() {
-  // put your setup code here, to run once:
+  Debug("Hello world!");
 }
 
 void loop() {
