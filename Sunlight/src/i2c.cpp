@@ -69,14 +69,16 @@ int debugScanForI2CDevices()
 
       if (address == 0x3C)
       {
-        Debug(" ... Screen");
+        Debug(" ... Screen (SDD1306");
         HAS_SCREEN = true;
       }
-    //   else if (address == 0x40)
-    //   {
-    //     Debug(" ... Current Sensor");
-    //     HAS_CURRENT_SENSOR = true;
-    //   }
+      else if (address == 0x48) //a CJMCU-75 with all address jumpers set to gnd
+      {
+        //https://github.com/hpaluch/i2c-cjmcu-75
+        //https://www.aliexpress.com/i/4000067322626.html
+        Debug(" ... Temp Sensor (CJMCU-75)");
+        HAS_TEMP_SENSOR = true;
+      }
     }
     else if (error == 4)
     {
