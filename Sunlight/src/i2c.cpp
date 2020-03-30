@@ -71,12 +71,18 @@ int debugScanForI2CDevices()
       {
         Debug(" ... Screen (SDD1306");
         HAS_SCREEN = true;
-      }
-      else if (address == 0x48) //a CJMCU-75 with all address jumpers set to gnd
+      //}
+      // else if (address == 0x48) //a CJMCU-75 with all address jumpers set to gnd
+      // {
+      //   //https://github.com/hpaluch/i2c-cjmcu-75
+      //   //https://www.aliexpress.com/i/4000067322626.html
+      //   Debug(" ... Temp Sensor (CJMCU-75)");
+      //   HAS_TEMP_SENSOR = true;
+      } 
+      else if (address = 0x76) //BMP-280
       {
-        //https://github.com/hpaluch/i2c-cjmcu-75
-        //https://www.aliexpress.com/i/4000067322626.html
-        Debug(" ... Temp Sensor (CJMCU-75)");
+        //https://www.aliexpress.com/item/32898134606.html?spm=a2g0s.9042311.0.0.27424c4dJE4Ptq
+        Debug(" ... Temp Sensor (BMP-280)");
         HAS_TEMP_SENSOR = true;
       }
     }

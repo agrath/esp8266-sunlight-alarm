@@ -42,23 +42,23 @@ char gammaCorrection[] =
 //test pixie
 //hardcode alarm time and work out pattern for wake up
 //later (when i have a screen and encoder)
-  //bedside light
-  //menu for config
-  //sleep 
-  //alarm time config
-  //show stuff like temp and time
-  //traffic display?
-  //sleep monitor using accel?
+//bedside light
+//menu for config
+//sleep
+//alarm time config
+//show stuff like temp and time
+//traffic display?
+//sleep monitor using accel?
 
-
-void setup() {
+void setup()
+{
   if (debugEnabled)
   {
     initializeSerial();
   }
 
   initializeI2C();
-  
+
   Debug("Hello world!");
 
   int deviceCount = debugScanForI2CDevices();
@@ -74,11 +74,14 @@ void setup() {
   {
     initializeOLEDDisplay();
   }
-
-  DebugF("Current temperature %f\r\n", getTemperatureReading());
+  if (HAS_TEMP_SENSOR)
+  {
+    initializeTemperatureSensor();
+  }
 }
 
-void loop() {
+void loop()
+{
   DebugF("Current temperature %f\r\n", getTemperatureReading());
   delay(1000);
 }

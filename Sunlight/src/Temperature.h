@@ -1,1 +1,2 @@
 float getTemperatureReading();
+void initializeTemperatureSensor();
