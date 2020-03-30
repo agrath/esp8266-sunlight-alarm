@@ -11,6 +11,7 @@
 #include <MacAddress.h>
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
+#include <Temperature.h>
 
 CRGB leds[NUM_LEDS];
 char gammaCorrection[] =
@@ -32,7 +33,6 @@ char gammaCorrection[] =
         177, 180, 182, 184, 186, 189, 191, 193, 196, 198, 200, 203, 205, 208, 210, 213,
         215, 218, 220, 223, 225, 228, 231, 233, 236, 239, 241, 244, 247, 249, 252, 255};
 
-//temp sensor init and read code
 //wifi init code
 //hide wifi creds from github how
 //ntp init code
@@ -48,7 +48,7 @@ char gammaCorrection[] =
   //alarm time config
   //show stuff like temp and time
   //traffic display?
-  //sleep monitor?
+  //sleep monitor using accel?
 
 
 void setup() {
@@ -74,8 +74,11 @@ void setup() {
   {
     initializeOLEDDisplay();
   }
+
+  DebugF("Current temperature %f\r\n", getTemperatureReading());
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  DebugF("Current temperature %f\r\n", getTemperatureReading());
+  delay(1000);
 }
