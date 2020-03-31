@@ -12,6 +12,14 @@
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 #include <Temperature.h>
+#ifdef ESP8266
+#include <ESP8266httpUpdate.h>
+#else
+#include <WiFiClient.h>
+#include <HTTPClient.h>
+#include <HTTPUpdate.h>
+#endif
+#include <WiFi.h>
 
 CRGB leds[NUM_LEDS];
 char gammaCorrection[] =
@@ -33,8 +41,6 @@ char gammaCorrection[] =
         177, 180, 182, 184, 186, 189, 191, 193, 196, 198, 200, 203, 205, 208, 210, 213,
         215, 218, 220, 223, 225, 228, 231, 233, 236, 239, 241, 244, 247, 249, 252, 255};
 
-//wifi init code
-//hide wifi creds from github how
 //ntp init code
 //led init code
 //pixie init code
@@ -78,6 +84,9 @@ void setup()
   {
     initializeTemperatureSensor();
   }
+
+  initWifi();
+  connectToWifi();
 }
 
 void loop()

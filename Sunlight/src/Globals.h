@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <IpAddress.h>
 
 //http://www.wellho.net/mouth/2575_Sharing-variables-between-files-of-code-in-C-extern.html
 
@@ -16,3 +17,6 @@ GLOBALEXTERN bool HAS_SCREEN;
 GLOBALEXTERN bool HAS_TEMP_SENSOR;
 GLOBALEXTERN double temperature;
 GLOBALEXTERN double humidity;
+GLOBALEXTERN IPAddress ip;
+GLOBALEXTERN bool wasWifiConnected;
+GLOBALEXTERN bool isWifiConnected;
