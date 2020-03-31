@@ -1,5 +1,7 @@
 #include <Arduino.h>
 #include <IpAddress.h>
+#include <FastLED.h>
+#include <Config.h>
 
 //http://www.wellho.net/mouth/2575_Sharing-variables-between-files-of-code-in-C-extern.html
 
@@ -20,3 +22,4 @@ GLOBALEXTERN double humidity;
 GLOBALEXTERN IPAddress ip;
 GLOBALEXTERN bool wasWifiConnected;
 GLOBALEXTERN bool isWifiConnected;
+GLOBALEXTERN CRGB leds[NUM_LEDS];
