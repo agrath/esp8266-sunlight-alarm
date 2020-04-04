@@ -23,3 +23,7 @@ GLOBALEXTERN IPAddress ip;
 GLOBALEXTERN bool wasWifiConnected;
 GLOBALEXTERN bool isWifiConnected;
 GLOBALEXTERN CRGB leds[NUM_LEDS];
+GLOBALEXTERN bool timeCallbackInvoked;
+GLOBALEXTERN timeval utcVal;
+GLOBALEXTERN time_t utc;
+GLOBALEXTERN char sharedCharacterBuffer[128]; //generic buffer

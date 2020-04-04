@@ -22,12 +22,8 @@
 #define FASTLED_ESP8266_NODEMCU_PIN_ORDER
 #include <FastLED.h>
 #include <Led.h>
+#include <ntp.h>
 
-//ntp init code
-//led init code
-//pixie init code
-//test led ring
-//test pixie
 //hardcode alarm time and work out pattern for wake up
 //later (when i have a screen and encoder)
 //bedside light
@@ -71,15 +67,24 @@ void setup()
 
   initWifi();
   connectToWifi();
+
+  getUtcFromNtp();
 }
 
-byte brightness = 0;
-int direction = 1;
+
 
 void loop()
 {
   //DebugF("Current temperature %f\r\n", getTemperatureReading());
   //delay(1000);
+  //pulseLEDsForTesting();
+  
+  delay(100);
+}
+
+byte brightness = 0;
+int direction = 1;
+void pulseLEDsForTesting(){
 
   brightness += direction;
   if (brightness == 255 || brightness == 0)

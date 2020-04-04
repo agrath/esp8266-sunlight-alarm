@@ -37,5 +37,10 @@ const char GammaCorrection[] =
         177, 180, 182, 184, 186, 189, 191, 193, 196, 198, 200, 203, 205, 208, 210, 213,
         215, 218, 220, 223, 225, 228, 231, 233, 236, 239, 241, 244, 247, 249, 252, 255};
 
+const char NTP_SERVER[] = "nz.pool.ntp.org";
+//https://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html
+//https://groups.google.com/forum/#!topic/nz.comp/k8xq_Vcg3D0
+//https://sites.google.com/a/usapiens.com/opnode/time-zones
+const char NTP_TZ[] = "NZST-12NZDT,M9.5.0,M4.1.0/3";
 #endif
 
