@@ -43,4 +43,3 @@ const char NTP_SERVER[] = "nz.pool.ntp.org";
 //https://sites.google.com/a/usapiens.com/opnode/time-zones
 const char NTP_TZ[] = "NZST-12NZDT,M9.5.0,M4.1.0/3";
 #endif
-
