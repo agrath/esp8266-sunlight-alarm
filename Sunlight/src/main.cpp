@@ -23,6 +23,7 @@
 #include <FastLED.h>
 #include <Led.h>
 #include <ntp.h>
+#include <TimeHelper.h>
 
 //hardcode alarm time and work out pattern for wake up
 //later (when i have a screen and encoder)
@@ -33,6 +34,8 @@
 //show stuff like temp and time
 //traffic display?
 //sleep monitor using accel?
+void setupAlarms();
+void testAlarmCallback();
 
 void setup()
 {
@@ -69,36 +72,59 @@ void setup()
   connectToWifi();
 
   getUtcFromNtp();
+
+  //todo: needs to be moved to config
+  setupAlarms();
 }
 
+//todo: needs to be an array
+AlarmData alarm;
+void setupAlarms()
+{
+  //Saturday & Sunday
+  time_t alarmTime = CreateTimeFromHourMinuteSecond(19, 45, 0);
+  time_t wakePeriod = CreateTimeFromHourMinuteSecond(0, 30, 0);
+  //time_t triggerTime = alarmTime - wakePeriod;
 
+  alarm.AlarmTime = alarmTime;
+  alarm.Days = dowSaturday | dowSunday;
+  alarm.WakePeriod = wakePeriod;
+
+  //note: the time here needs to be the alarm time less the wake period
+  //so we reach the target brightness and colour by alarm time
+  //also need to consider how we are going to handle overlapping alarms (validation?)
+}
 
 void loop()
 {
   //DebugF("Current temperature %f\r\n", getTemperatureReading());
   //delay(1000);
   //pulseLEDsForTesting();
-  
-  delay(100);
-}
-
-byte brightness = 0;
-int direction = 1;
-void pulseLEDsForTesting(){
-
-  brightness += direction;
-  if (brightness == 255 || brightness == 0)
+  delay(1000);
+  struct tm *localTime = getCurrentLocalTime();
+  if(CheckAlarm(&alarm, localTime) && !alarm.IsInProgress)
   {
-    direction *= -1;
+    alarm.IsInProgress = true;
   }
-  
-  byte gammaCorrectedBrightness = GammaCorrection[brightness];
-  CRGB color = CRGB(gammaCorrectedBrightness, gammaCorrectedBrightness, gammaCorrectedBrightness);
-  fill_solid(leds, NUM_LEDS, color);
-  FastLED.show();
-  sendPixieColor(color);
-
-  //DebugF("brightness %d=>%d (%d)\r\n", brightness, gammaCorrectedBrightness, direction);
-  delay(20);
-  yield();
 }
+
+// byte brightness = 0;
+// int direction = 1;
+// void pulseLEDsForTesting(){
+
+//   brightness += direction;
+//   if (brightness == 255 || brightness == 0)
+//   {
+//     direction *= -1;
+//   }
+
+//   byte gammaCorrectedBrightness = GammaCorrection[brightness];
+//   CRGB color = CRGB(gammaCorrectedBrightness, gammaCorrectedBrightness, gammaCorrectedBrightness);
+//   fill_solid(leds, NUM_LEDS, color);
+//   FastLED.show();
+//   sendPixieColor(color);
+
+//   //DebugF("brightness %d=>%d (%d)\r\n", brightness, gammaCorrectedBrightness, direction);
+//   delay(20);
+//   yield();
+// }
