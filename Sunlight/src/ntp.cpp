@@ -75,3 +75,11 @@ void displayFormattedTime()
   strftime(sharedCharacterBuffer, 80, "%d %B %Y %H:%M:%S ", timeInfo);
   DebugF((const char *)F("Local time fetched as %s\n"), sharedCharacterBuffer);
 }
+
+struct tm* getCurrentLocalTime()
+{
+  gettimeofday(&utcVal, NULL);
+  utc = (time_t)utcVal.tv_sec;
+  struct tm *timeInfo = localtime(&utc);
+  return timeInfo;
+}
