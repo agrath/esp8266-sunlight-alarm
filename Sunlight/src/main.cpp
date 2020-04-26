@@ -73,11 +73,11 @@ void setup()
 
   getUtcFromNtp();
 
-  //todo: needs to be moved to config
-  setupAlarms();
+  //todo: needs to be moved to flash config (menu)
+  //setupAlarms();
 }
 
-//todo: needs to be an array
+//todo: needs to be an array of multiple alarms
 AlarmData alarm;
 void setupAlarms()
 {
@@ -87,12 +87,10 @@ void setupAlarms()
   //time_t triggerTime = alarmTime - wakePeriod;
 
   alarm.AlarmTime = alarmTime;
-  alarm.Days = dowSaturday | dowSunday;
+  alarm.Days = GetFlagValueForDayOfWeek(dowSaturday) | GetFlagValueForDayOfWeek(dowTuesday);
   alarm.WakePeriod = wakePeriod;
 
-  //note: the time here needs to be the alarm time less the wake period
-  //so we reach the target brightness and colour by alarm time
-  //also need to consider how we are going to handle overlapping alarms (validation?)
+  //todo: consider how we are going to handle overlapping alarms (validation?)
 }
 
 void loop()
@@ -100,12 +98,15 @@ void loop()
   //DebugF("Current temperature %f\r\n", getTemperatureReading());
   //delay(1000);
   //pulseLEDsForTesting();
-  delay(1000);
-  struct tm *localTime = getCurrentLocalTime();
-  if(CheckAlarm(&alarm, localTime) && !alarm.IsInProgress)
-  {
-    alarm.IsInProgress = true;
-  }
+  delay(100);
+
+
+  // Test alarm trigger
+  // struct tm *localTime = getCurrentLocalTime();
+  // if(CheckAlarm(&alarm, localTime) && !alarm.IsInProgress)
+  // {
+  //   alarm.IsInProgress = true;
+  // }
 }
 
 // byte brightness = 0;

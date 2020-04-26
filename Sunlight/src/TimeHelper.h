@@ -16,3 +16,5 @@ struct AlarmData
 };
 
 bool CheckAlarm(AlarmData *alarm, tm *currentLocalTime);
+unsigned short GetFlagValueForDayOfWeek(timeDayOfWeek_t dayOfWeek);
+bool MatchDayOfWeekToCombinedFlagValue(unsigned short flagValue, timeDayOfWeek_t dayOfWeek);
