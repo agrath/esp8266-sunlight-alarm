@@ -30,27 +30,32 @@ extern const TProgmemRGBPalette16 SunrisePalette PROGMEM =
 CRGB getCurrentRingSunriseColor(uint16_t step)
 {
     //uint16 can go up to 65535 so we just clamp it to 512
-    step = constrain(step, 0, 512);
+    step = constrain(step, 0, 510);
     //so from 0-255 we want to have travelled half of the palette and all of the brightness (for the ring)
     uint8_t brightness = constrain(step, 0, 255); //so at >255 brightness is clamped at 255
     uint8_t index = step / 2;                     //by 255, index = 128, by 512, index = 255
+
+    DebugF("[testSunriseEffect] ring index:%d, brightness:%d\r\n", index, brightness);
     //use step as both palette and brightness
     CRGB pixelColor = ColorFromPalette(SunrisePalette, index, brightness, LINEARBLEND);
     return pixelColor;
 }
 CRGB getCurrentCoreSunriseColor(uint16_t step)
 {
-    //uint16 can go up to 65535 so we just clamp it to 512
-    step = constrain(step, 0, 512);
+    //uint16 can go up to 65535 so we just clamp it to 510
+    step = constrain(step, 0, 510);
     //the core doesn't ignite until halfway through the sequence
     if (step < 255)
     {
+        DebugF("[testSunriseEffect] core index:0, brightness:0\r\n");
         return CRGB::Black;
     }
     //after 255
     //core only ignites when we are >128 colours in
-    uint8_t index = step / 2;        //by 255, index = 128, by 512, index = 255
-    uint8_t brightness = step - 255; //at 255 this is 0, then by 512 this becomes 255
+    uint8_t index = step / 2;        //by 255, index = 128, by 510, index = 255
+    uint8_t brightness = step - 255; //at 255 this is 0, then by 510 this becomes 255
+
+    DebugF("[testSunriseEffect] core index:%d, brightness:%d\r\n", index, brightness);
     //use step as both palette and brightness
     CRGB pixelColor = ColorFromPalette(SunrisePalette, index, brightness, LINEARBLEND);
     return pixelColor;
@@ -63,7 +68,7 @@ void initializeLED()
     //pinMode(INTERNAL_LED_DATA_PIN, OUTPUT);
     //pinMode(EXTERNAL_LED_DATA_PIN, OUTPUT);
 
-    FastLED.addLeds<WS2811, EXTERNAL_LED_DATA_PIN, RGB>(leds, NUM_LEDS);
+    FastLED.addLeds<WS2811, EXTERNAL_LED_DATA_PIN, GRB>(leds, NUM_LEDS);
     //FastLED.addLeds<WS2811, INTERNAL_LED_DATA_PIN, GRB>(leds, NUM_LEDS);
 
     fill_solid(leds, NUM_LEDS, CRGB::Black);

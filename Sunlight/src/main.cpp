@@ -35,7 +35,8 @@
 //traffic display?
 //sleep monitor using accel?
 void setupAlarms();
-void testAlarmCallback();
+//void testAlarmCallback();
+void testSunriseEffect();
 
 void setup()
 {
@@ -98,15 +99,39 @@ void loop()
   //DebugF("Current temperature %f\r\n", getTemperatureReading());
   //delay(1000);
   //pulseLEDsForTesting();
-  delay(100);
-
-
+  delay(50);
+  testSunriseEffect();
   // Test alarm trigger
   // struct tm *localTime = getCurrentLocalTime();
   // if(CheckAlarm(&alarm, localTime) && !alarm.IsInProgress)
   // {
   //   alarm.IsInProgress = true;
   // }
+}
+
+int step = 0;
+void testSunriseEffect()
+{
+
+  
+  if (step > 510)
+  {
+    step = 0;
+  }
+
+  DebugF("[testSunriseEffect] step %d\r\n", step);
+  
+  CRGB ringColor = getCurrentRingSunriseColor(step);
+  CRGB coreColor = getCurrentCoreSunriseColor(step);
+
+  //ring
+  fill_solid(leds, NUM_LEDS, ringColor);
+  FastLED.show();
+
+  //core
+  sendPixieColor(coreColor);
+
+  step++;
 }
 
 // byte brightness = 0;
